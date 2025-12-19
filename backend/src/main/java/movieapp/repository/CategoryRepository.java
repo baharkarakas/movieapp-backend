@@ -7,7 +7,13 @@ import java.util.List;
 import java.util.Optional;
 
 public interface CategoryRepository extends JpaRepository<Category, Long> {
-    List<Category> findAllByUser_Email(String email);
+
+    // public collections
+    List<Category> findByIsPublicTrueOrderByIdDesc();
+
+    // my collections
+    List<Category> findByUser_IdOrderByIdDesc(Long userId);
+
+    // ✅ needed by WatchlistController (check ownership by email)
     Optional<Category> findByIdAndUser_Email(Long id, String email);
-    boolean existsByUser_EmailAndName(String email, String name);
 }

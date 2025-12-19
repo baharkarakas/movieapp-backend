@@ -9,6 +9,13 @@ import java.util.List;
 import java.util.Optional;
 
 public interface WatchlistItemRepository extends JpaRepository<WatchlistItem, Long> {
+    @Query("""
+    select wi from WatchlistItem wi
+    join fetch wi.movie
+    join fetch wi.category c
+    where c.id = :categoryId and c.isPublic = true
+""")
+    List<WatchlistItem> findAllPublicByCategoryIdWithDetails(@Param("categoryId") Long categoryId);
 
     @Query("""
         select wi from WatchlistItem wi

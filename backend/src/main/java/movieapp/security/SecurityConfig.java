@@ -8,8 +8,8 @@ import org.springframework.http.HttpMethod;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.ProviderManager;
 import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
-import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.http.SessionCreationPolicy;
+import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
@@ -52,19 +52,19 @@ public class SecurityConfig {
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
         return http
-                // ✅ Use your CorsConfig.corsConfigurationSource()
+                // CORS
                 .cors(cors -> cors.configurationSource(corsConfigurationSource))
 
-                // ✅ Stateless API
+                // Stateless + no CSRF (JWT)
                 .csrf(csrf -> csrf.disable())
                 .sessionManagement(sm -> sm.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
 
-                // ✅ Disable default login mechanisms (JWT only)
+                // Disable default auth mechanisms
                 .formLogin(form -> form.disable())
                 .httpBasic(basic -> basic.disable())
                 .logout(logout -> logout.disable())
 
-                // ✅ Return 401 instead of redirect
+                // Return 401 (no redirect)
                 .exceptionHandling(ex -> ex.authenticationEntryPoint(
                         (req, res, e) -> res.sendError(HttpServletResponse.SC_UNAUTHORIZED)
                 ))
@@ -73,23 +73,29 @@ public class SecurityConfig {
                         // Preflight
                         .requestMatchers(HttpMethod.OPTIONS, "/**").permitAll()
 
-                        // Public Thymeleaf pages (SSR)
+                        // SSR pages + static
                         .requestMatchers("/", "/how-to-use", "/error").permitAll()
                         .requestMatchers("/css/**", "/js/**", "/images/**", "/webjars/**").permitAll()
 
-                        // Public auth endpoints
+                        // Auth endpoints
                         .requestMatchers(HttpMethod.POST, "/api/auth/register", "/api/auth/login").permitAll()
+
+                        // ✅ Public collections (read-only)
+                        .requestMatchers(HttpMethod.GET, "/api/collections/public").permitAll()
+                        .requestMatchers(HttpMethod.GET, "/api/collections/*/items").permitAll()
+
+                        // ✅ (Optional) external search public, import private
+                        .requestMatchers(HttpMethod.GET, "/api/external/search").permitAll()
+                        .requestMatchers("/api/external/**").authenticated()
+
+                        // ✅ Movies: ALL endpoints require login (GET dahil)
                         .requestMatchers("/api/movies/**").authenticated()
-
-
-                        // Public read-only movies
-                        .requestMatchers(HttpMethod.GET, "/api/movies/**").permitAll()
 
                         // Everything else requires login
                         .anyRequest().authenticated()
                 )
 
-                // JWT
+                // JWT filter
                 .addFilterBefore(jwtAuthFilter, UsernamePasswordAuthenticationFilter.class)
 
                 .build();
