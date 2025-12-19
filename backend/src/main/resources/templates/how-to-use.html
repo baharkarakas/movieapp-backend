@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>How to Use - Movie Collection</title>
+    <style>
+        body { font-family: Arial, sans-serif; margin: 40px; line-height: 1.6; }
+        .box { max-width: 900px; margin: 0 auto; }
+        .card { border: 1px solid #eee; border-radius: 12px; padding: 20px; margin: 16px 0; }
+        .title { font-size: 32px; margin: 0 0 10px; }
+        .muted { color: #666; }
+        ul { margin: 8px 0 0 18px; }
+        code { background: #f6f6f6; padding: 2px 6px; border-radius: 6px; }
+        a { color: #0a66c2; text-decoration: none; }
+    </style>
+</head>
+<body>
+<div class="box">
+
+    <h1 class="title">How to Use</h1>
+    <p class="muted">
+        This page explains the purpose of the project and how to use the application.
+    </p>
+
+    <div class="card">
+        <h2>Purpose</h2>
+        <p>
+            Movie Collection is a simple web application where users can discover movies,
+            like them, and build a personal watchlist organized by categories.
+        </p>
+    </div>
+
+    <div class="card">
+        <h2>How it works (Step-by-step)</h2>
+        <ul>
+            <li><b>Explore:</b> Open the Home page to see all movies.</li>
+            <li><b>Register / Login:</b> Create an account or sign in to unlock personal features.</li>
+            <li><b>Like movies:</b> Click the heart button to like/unlike movies.</li>
+            <li><b>Create categories:</b> Go to Dashboard and add categories (e.g., Sci-Fi, Drama).</li>
+            <li><b>Add to watchlist:</b> Choose a category and click <code>+ Listeye Ekle</code>.</li>
+            <li><b>View your lists:</b> Dashboard shows your categories, watchlist items, and liked movies.</li>
+            <li><b>Logout:</b> End your session anytime from the top menu.</li>
+        </ul>
+    </div>
+
+    <div class="card">
+        <h2>Notes</h2>
+        <ul>
+            <li>You must be logged in to like movies or add them to your watchlist.</li>
+            <li>Password must be at least <b>6 characters</b>.</li>
+        </ul>
+    </div>
+
+    <p class="muted">
+        Back to app: <a href="http://localhost:3000">React Frontend</a>
+    </p>
+
+</div>
+</body>
+</html>

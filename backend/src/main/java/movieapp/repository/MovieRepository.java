@@ -1,6 +1,11 @@
 package movieapp.repository;
 
 import movieapp.entity.Movie;
+import movieapp.entity.User;
 import org.springframework.data.jpa.repository.JpaRepository;
 
-public interface MovieRepository extends JpaRepository<Movie, Long> {}
+import java.util.List;
+
+public interface MovieRepository extends JpaRepository<Movie, Long> {
+    List<Movie> findByOwner(User owner);
+}

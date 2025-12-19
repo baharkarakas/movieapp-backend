@@ -57,5 +57,11 @@ public class JwtAuthFilter extends org.springframework.web.filter.OncePerRequest
 
         filterChain.doFilter(request, response);
     }
+    @Override
+    protected boolean shouldNotFilter(HttpServletRequest request) {
+        String path = request.getServletPath();
+        return path.startsWith("/api/auth/")
+                || request.getMethod().equalsIgnoreCase("OPTIONS");
+    }
 
 }
