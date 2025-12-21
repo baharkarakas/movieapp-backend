@@ -15,21 +15,15 @@ public class CorsConfig {
     public CorsConfigurationSource corsConfigurationSource() {
         CorsConfiguration config = new CorsConfiguration();
 
-        config.setAllowedOriginPatterns(List.of(
+        config.setAllowedOrigins(List.of(
                 "http://localhost:3000",
                 "http://127.0.0.1:3000",
-                "https://movieapp-frontend-lime.vercel.app",
-                "https://*.vercel.app"
+                "https://movieapp-frontend-lime.vercel.app"
         ));
 
         config.setAllowedMethods(List.of("GET","POST","PUT","DELETE","OPTIONS"));
-
-        // ✅ allow any header (fixes preflight issues)
-        config.addAllowedHeader("*");
-
-        // optional
+        config.setAllowedHeaders(List.of("*"));
         config.setExposedHeaders(List.of("Authorization"));
-
         config.setAllowCredentials(true);
         config.setMaxAge(3600L);
 
