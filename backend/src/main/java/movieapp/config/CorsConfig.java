@@ -14,15 +14,22 @@ public class CorsConfig {
     @Bean
     public CorsConfigurationSource corsConfigurationSource() {
         CorsConfiguration config = new CorsConfiguration();
+
         config.setAllowedOriginPatterns(List.of(
                 "http://localhost:3000",
                 "http://127.0.0.1:3000",
-                "https://movieapp-frontend-vercel.vercel.app",
+                "https://movieapp-frontend-lime.vercel.app",
                 "https://*.vercel.app"
         ));
+
         config.setAllowedMethods(List.of("GET","POST","PUT","DELETE","OPTIONS"));
-        config.setAllowedHeaders(List.of("Authorization","Content-Type","Accept","Origin"));
+
+        // ✅ allow any header (fixes preflight issues)
+        config.addAllowedHeader("*");
+
+        // optional
         config.setExposedHeaders(List.of("Authorization"));
+
         config.setAllowCredentials(true);
         config.setMaxAge(3600L);
 
