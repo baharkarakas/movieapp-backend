@@ -53,7 +53,7 @@ public class SecurityConfig {
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
         return http
                 // CORS
-                .cors(cors -> cors.configurationSource(corsConfigurationSource))
+                .cors(cors -> {})
 
                 // Stateless + no CSRF (JWT)
                 .csrf(csrf -> csrf.disable())
